@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test_unit": "./node_modules/.bin/mocha --require @babel/register ./test/unit/test.js",
+    "test_integration": "./node_modules/.bin/mocha --require @babel/register ./test/integration/test.js",
     "build": "./node_module/.bin/webpack --mode development"
   },
   "repository": {
