@@ -1,6 +1,6 @@
 import chai from 'chai';
 import {Cell} from '../../src/model/Cell';
-
+import {Action} from '../../src/model/Action';
 
 const expect = chai.expect;
 
@@ -15,4 +15,22 @@ describe('unit test Cell', () => {
 		expect(cell.width).equal(1);
 		expect(cell.height).equal(1);
 	});
+});
+
+describe('unit test action', () => {
+	let action = new Action();
+	it('should declare an action', () => {
+		expect(action.isConsumed).is.false;
+	});
+
+	it('should consume the action', () => {
+		action.consume();
+		expect(action.isConsumed).is.true;
+	});
+
+	it('should restore the action', () => {
+		action.revert();
+		expect(action.isConsumed).is.false;
+	});
+
 });
