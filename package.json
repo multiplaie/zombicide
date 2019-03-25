@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --require @babel/register",
+    "test_unit": "./node_modules/.bin/mocha --require @babel/register ./test/unit/test.js",
     "build": "./node_module/.bin/webpack --mode development"
   },
   "repository": {
