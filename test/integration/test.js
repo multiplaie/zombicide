@@ -1,6 +1,7 @@
 import chai from 'chai';
 import {Cell} from "../../src/model/Cell";
 import {Streetmap} from '../../src/model/Streetmap';
+import {Character} from '../../src/model/Character';
 
 const expect = chai.expect;
 
@@ -135,4 +136,25 @@ describe('Streetmap integration tests', () => {
 	});
 
 
+});
+
+describe('Character intergration tests', () => {
+	const character = new Character('Ned');
+
+	it('should create a character', () => {
+		expect(character.name).equal('Ned');
+		expect(character.getRemainingAction()).property('length').equal(3);
+	});
+
+	it('should consume all actions remaining', () => {
+		character.consumeAction();
+		character.consumeAction();
+		character.consumeAction();
+		expect(character.getRemainingAction()).property('length').equal(0);
+	});
+
+	it('should restore all actions', () => {
+		character.revertActions();
+		expect(character.getRemainingAction()).property('length').equal(3);
+	});
 });
