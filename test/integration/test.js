@@ -115,10 +115,10 @@ describe('Streetmap integration tests', () => {
 		expect(cell.northWallType).equal(Cell.closedWallValue);
 	});
 
-	it('should get cells targeted by a distance', () => {
-
-		const zeroDistantCells = streetmap.getCellsIdTargetedByDistance(7, 0);
-		const oneDistantCells = streetmap.getCellsIdTargetedByDistance(7, 1);
+	it('should count the distance between two cells', () => {
+		expect(streetmap.getDistanceBetweenTwoCells(1, 5)).property('length').equal(1);
+		streetmap.getDistanceBetweenTwoCells(10, 5).slice(0, 1).map(e => expect(e.distance).equal(5));
+		streetmap.getDistanceBetweenTwoCells(10, 8).slice(0, 1).map(e => expect(e.distance).equal(4));
 		const twoDistantCellsStraight = streetmap.getCellsIdTargetedByDistance(1, 2, Streetmap.eastDirectionValue, true);
 		const twoDistantCellsAllDirection = streetmap.getCellsIdTargetedByDistance(1, 2);
 		const threeDistantCellsAllDirection = streetmap.getCellsIdTargetedByDistance(1, 3);
@@ -130,10 +130,17 @@ describe('Streetmap integration tests', () => {
 		[6, 10, 11, 8, 9].map(cellId => expect(threeDistantCellsAllDirection).include(cellId));
 	});
 
-	it('should count the distance between two cells', () => {
-		expect(streetmap.getDistanceBetweenTwoCells(1, 5)).equal(4);
-		expect(streetmap.getDistanceBetweenTwoCells(10, 5)).equal(5);
-		expect(streetmap.getDistanceBetweenTwoCells(10, 8)).equal(4);
+	it('should get all available paths from a cell', () => {
+		expect(streetmap.getAvailablePaths(8)).deep.members(
+			[
+				[8, 3, 9, 5],
+				[8, 3, 9, 4],
+				[8, 3, 2, 1],
+				[8, 3, 2, 7, 6],
+				[8, 3, 2, 7, 10],
+				[8, 3, 2, 7, 11]
+			]
+		);
 	});
 
 

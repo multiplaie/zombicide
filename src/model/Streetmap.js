@@ -1,4 +1,4 @@
-import _ from "lodash";
+import {Helper} from "../helper/Helper";
 
 const northDirectionValue = 'north';
 const eastDirectionValue = 'east';
@@ -15,87 +15,130 @@ class Streetmap {
 		this._height = height;
 	}
 
+	/**
+	 *
+	 * @returns {*}
+	 */
 	get width() {
 		return this._width;
 	}
 
+	/**
+	 *
+	 * @returns {*}
+	 */
 	get height() {
 		return this._height;
 	}
 
+	/**
+	 *
+	 * @returns {*}
+	 */
+	get cells() {
+		return this._cells;
+	}
+
+	/**
+	 *
+	 * @returns {string}
+	 */
 	static get northDirectionValue() {
 		return northDirectionValue;
 	}
 
+	/**
+	 *
+	 * @returns {string}
+	 */
 	static get eastDirectionValue() {
 		return eastDirectionValue;
 	}
 
+	/**
+	 *
+	 * @returns {string}
+	 */
 	static get southDirectionValue() {
 		return southDirectionValue;
 	}
 
+	/**
+	 *
+	 * @returns {string}
+	 */
 	static get westDirectionValue() {
 		return westDirectionValue;
 	}
 
+	/**
+	 *
+	 * @param cellId
+	 * @returns {*}
+	 */
 	getCellById(cellId) {
 		return this._cells.find(cell => cell.id === cellId);
 	}
 
-	static getOppositeDirection(direction) {
-		switch (direction) {
-			case this.northDirectionValue:
-				return this.southDirectionValue;
-			case this.southDirectionValue:
-				return this.northDirectionValue;
-			case this.eastDirectionValue:
-				return this.westDirectionValue;
-			case this.westDirectionValue:
-				return this.eastDirectionValue;
-
-		}
-	}
-
-	getCellsIdTargetedByDistance(cellIdOrigin, distance, direction = false, straight = false, previousCellId = false) {
-		let cellsId = [];
-		if (distance === 0) {
-			cellsId.push(cellIdOrigin);
-		} else {
-			let accessToExplore = this._access.find(cellAccess => cellAccess.cellId === cellIdOrigin).access.filter(access => access.cellId !== previousCellId);
-			if (direction !== false && straight) {
-				accessToExplore = accessToExplore.filter(access => access.direction === direction);
-			}
-			accessToExplore
-				.map(access => {
-					const directionToExplore = (direction !== false && straight) ? direction : access.direction;
-					this
-						.getCellsIdTargetedByDistance(access.cellId, distance - 1, directionToExplore, straight, cellIdOrigin)
-						.filter(cellId => !cellsId.includes(cellId))
-						.forEach(cellId => cellsId.push(cellId));
-				})
-			;
-		}
-		return cellsId;
-	}
-
+	/**
+	 *
+	 * @param originCellId
+	 * @param targetedCellId
+	 * @returns {*[]}
+	 */
 	getDistanceBetweenTwoCells(originCellId, targetedCellId) {
-		let cellsScanned = [];
-		let distance = -1;
+		let paths = [];
+		this
+			.getAvailablePaths(originCellId)
+			.filter(path => path.includes(targetedCellId))
+			.map(path => {
+				if (paths.find(p => p.distance === path.indexOf(targetedCellId)) === undefined) {
+					paths
+						.push({
+							distance: path.indexOf(targetedCellId),
+							paths: []
+						});
+				}
+				paths.find(p => p.distance === path.indexOf(targetedCellId)).paths =
+					[
+						...paths.find(p => p.distance === path.indexOf(targetedCellId)).paths.filter(path2 => !Helper.isEqual(path2, path.slice(0, path.indexOf(targetedCellId) + 1))),
+						path.slice(0, path.indexOf(targetedCellId) + 1)
+					];
+			});
+		return paths.filter((path, index) => paths.indexOf(path) >= index);
+	}
+
+	/**
+	 *
+	 * @param originCellId
+	 * @returns {*[][]}
+	 */
+	getAvailablePaths(originCellId) {
+		let paths = [[originCellId]];
 		let scanComplete = false;
-		while (cellsScanned.includes(targetedCellId) === false && !scanComplete) {
-			let currentScan = this.getCellsIdTargetedByDistance(originCellId, distance + 1);
-			if (currentScan.filter(currentCellIdScan => !cellsScanned.includes(currentCellIdScan)).length === 0) {
+		while (!scanComplete) {
+			let newPaths = [];
+			paths.map(path => {
+				const accessFiltered = this._access
+					.find(access => access.cellId === path[path.length - 1])
+					.access
+					.filter(access => !path.includes(access.cellId));
+
+				if (accessFiltered.length === 0) {
+					newPaths.push(path);
+				} else {
+					accessFiltered.map(cellAccess => {
+						newPaths.push([...path, cellAccess.cellId]);
+					});
+				}
+			});
+
+			if (Helper.isEqual(paths, newPaths)) {
 				scanComplete = true;
 			}
-
-			distance++;
-			currentScan.map((cellId) => {
-				cellsScanned.push(cellId);
-			});
+			paths = newPaths;
 		}
-
-		return (scanComplete) ? -1 : distance;
+		return paths;
 	}
 }
 
