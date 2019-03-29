@@ -18,8 +18,8 @@ class Character {
 		return this._actions.filter(action => !action.isConsumed);
 	}
 
-	consumeAction() {
-		this.getRemainingAction().slice(0, 1).map(action => action.consume());
+	consumeAction(quantity = 1) {
+		this.getRemainingAction().slice(0, quantity).map(action => action.consume());
 	}
 
 

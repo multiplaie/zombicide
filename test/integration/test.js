@@ -119,15 +119,6 @@ describe('Streetmap integration tests', () => {
 		expect(streetmap.getDistanceBetweenTwoCells(1, 5)).property('length').equal(1);
 		streetmap.getDistanceBetweenTwoCells(10, 5).slice(0, 1).map(e => expect(e.distance).equal(5));
 		streetmap.getDistanceBetweenTwoCells(10, 8).slice(0, 1).map(e => expect(e.distance).equal(4));
-		const twoDistantCellsStraight = streetmap.getCellsIdTargetedByDistance(1, 2, Streetmap.eastDirectionValue, true);
-		const twoDistantCellsAllDirection = streetmap.getCellsIdTargetedByDistance(1, 2);
-		const threeDistantCellsAllDirection = streetmap.getCellsIdTargetedByDistance(1, 3);
-
-		expect(zeroDistantCells).deep.equal([7]);
-		[2, 6, 10, 11].map(cellId => expect(oneDistantCells).include(cellId));
-		expect(twoDistantCellsStraight).deep.equal([3]);
-		[7, 3].map(cellId => expect(twoDistantCellsAllDirection).include(cellId));
-		[6, 10, 11, 8, 9].map(cellId => expect(threeDistantCellsAllDirection).include(cellId));
 	});
 
 	it('should get all available paths from a cell', () => {
@@ -155,6 +146,7 @@ describe('Character integration tests', () => {
 	});
 
 	it('should consume all actions remaining', () => {
+		expect(character.getRemainingAction()).property('length').equal(3);
 		character.consumeAction();
 		character.consumeAction();
 		character.consumeAction();
@@ -266,21 +258,29 @@ describe('Game integration tests', () => {
 		new Character('Phil')
 	];
 
-	const game = new Game(streetmap,characters);
+	const rules = {
+		startCellId: 8,
+	};
+
+	const game = new Game(streetmap, characters, rules);
 
 	it('should create a game', () => {
 		expect(game.characters).property('length').equal(2);
 	});
 
-	it('should invoke characters on streetmap', () => {
+	it('should get the name of current playing character', () => {
 		game.start();
-		expect(game.getCharacterPosition(game.currentPlayer)).property('id').equal(8);
+		expect(game.currentPlayer).property('name').equal('Ned');
+	});
+
+	it('should invoke characters on streetmap', () => {
+		expect(game.getCharacterStates(game.currentPlayer)).property('positionCellId').equal(8);
 	});
 
 	it('should move character', () => {
-		game.move(Streetmap.eastDirectionValue);
-		expect(game.getCharacterPosition(game.currentPlayer)).property('id').equal(9);
-		expect(game.currentPlayer.getRemainingAction()).property('length').equal(2);
+		game.moveCurrentCharacter(1);
+		expect(game.getCharacterStates(game.currentPlayer)).property('positionCellId').equal(1);
+		expect(game.currentPlayer.getRemainingAction()).property('length').equal(0);
 	});
 
 	it('should declare end turn and make the next character playable', () => {
