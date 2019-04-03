@@ -1,0 +1,158 @@
+
+ul{
+	padding: 0;
+}
+ul li{
+	list-style: none;
+}
+
+#player{
+	height: 100vh;
+	width: 20%;
+	background-color: #b82c13;
+	color: #f5fef0;
+	top: 0;
+}
+
+#game{
+	margin-left: 22%;
+	overflow-x: auto;
+	width: 3100px;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+#game .grid{
+	position: absolute;
+}
+#game .grid .cell{
+	width: 500px;
+	height: 500px;
+	padding: 0;
+	position: absolute;
+	top: 0; left: 0;
+}
+
+#game .grid .cell.highlight{
+	border-color: #eda600!important;
+	border-width: 3px!important;
+}
+
+#game .grid [data-width-cell = "2"]{
+	width: calc(2*500px);
+}
+#game .grid [data-width-cell = "3"]{
+	width: calc(3*500px);
+}
+#game .grid [data-width-cell = "4"]{
+	width: calc(4*500px);
+}
+#game .grid [data-height-cell = "2"]{
+	height: calc(2*500px);
+}
+#game .grid [data-height-cell = "3"]{
+	height: calc(3*500px);
+}
+#game .grid [data-height-cell = "4"]{
+	height: calc(4*500px);
+}
+#game .grid [data-position-row = "2"]{
+	 top: calc(1*500px);
+ }
+#game .grid [data-position-row = "3"]{
+	top: calc(2*500px);
+}
+#game .grid [data-position-col = "2"]{
+	left: calc(1*500px);
+}
+#game .grid [data-position-col = "3"]{
+	left: calc(2*500px);
+}
+#game .grid [data-position-col = "4"]{
+	left: calc(3*500px);
+}
+#game .grid [data-position-col = "5"]{
+	left: calc(4*500px);
+}
+#game .grid [data-position-col = "6"]{
+	left: calc(5*500px);
+}
+
+#game .grid [data-north-wall = "closed"]{
+	border-top-color: #000!important;
+	border-top-width: 2px!important;
+}
+#game .grid [data-south-wall = "closed"]{
+	border-bottom-color: #000!important;
+	border-bottom-width: 2px!important;
+}
+#game .grid [data-east-wall = "closed"]{
+	border-right-color: #000!important;
+	border-right-width: 2px!important;
+}
+#game .grid [data-west-wall = "closed"]{
+	border-left-color: #000!important;
+	border-left-width: 2px!important;
+}
+
+#game .grid [data-north-wall = "open"]{
+	border-top-style: dashed!important;
+}
+#game .grid [data-south-wall = "open"]{
+	border-bottom-style: dashed!important;
+}
+#game .grid [data-east-wall = "open"]{
+	border-right-style: dashed!important;
+}
+#game .grid [data-west-wall = "open"]{
+	border-left-style: dashed!important;
+}
+
+#game .characters{
+	position: absolute;
+}
+
+#game .characters .character{
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #637d7e;
+	color: #f5fef0;
+	padding: 1em;
+	height: 100px;
+	width: 100px;
+	border-color: #b82c13!important;
+	border-width: 2px!important;
+}
+
+#game .characters [data-position-row = "2"]{
+	top: calc(1*500px + 25px);
+}
+#game .characters [data-position-row = "3"]{
+	top: calc(2*500px + 25px);
+}
+#game .characters [data-position-col = "2"]{
+	left: calc(1*500px + 25px);
+}
+#game .characters [data-position-col = "3"]{
+	left: calc(2*500px + 25px);
+}
+#game .characters [data-position-col = "4"]{
+	left: calc(3*500px + 25px);
+}
+#game .characters [data-position-col = "5"]{
+	left: calc(4*500px + 25px);
+}
+#game .characters [data-position-col = "6"]{
+	left: calc(5*500px + 25px);
+}
+
+#game .characters .actions{
+	position: absolute;
+	background-color: #f0f0f0;
+
+}
+
+#game .characters .actions .action{
+	padding: 0 1em;
+}
+
