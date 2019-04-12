@@ -15,8 +15,7 @@ ul li {
   margin-bottom: 50px;
   margin-left: 22%;
   margin-top: 50px;
-  overflow-x: auto;
-  width: 3100px; }
+  overflow-x: auto; }
   #game .grid {
     position: absolute; }
     #game .grid .cell {

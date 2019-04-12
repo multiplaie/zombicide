@@ -147,9 +147,7 @@ describe('Character integration tests', () => {
 
 	it('should consume all actions remaining', () => {
 		expect(character.getRemainingAction()).property('length').equal(3);
-		character.consumeAction();
-		character.consumeAction();
-		character.consumeAction();
+		character.consumeAction(3);
 		expect(character.getRemainingAction()).property('length').equal(0);
 	});
 
