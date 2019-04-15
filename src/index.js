@@ -1,9 +1,9 @@
-import {Streetmap} from "./components/Streetmap";
+import {Game} from "./components/Game";
 import React from 'react';
 import {render} from 'react-dom';
 import style from "./assets/main.scss";
 
 render(
-	<Streetmap />,
+	<Game />,
 	document.getElementById('root')
 );

@@ -27,6 +27,14 @@ class Game {
 		this._roundCounter = 0;
 	}
 
+	get streetmap(){
+		return this._streetmap;
+	}
+
+	get charactersStates(){
+		return this._charactersStates;
+	}
+
 	get characters() {
 		return this._characters;
 	}
