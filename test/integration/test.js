@@ -101,7 +101,7 @@ describe('Streetmap integration tests', () => {
 	];
 
 
-	const streetmap = new Streetmap(cells, access, 6, 3);
+	const streetmap = new Streetmap(cells, access,[], 6, 3);
 
 
 	it('should create a streetmap', () => {
@@ -252,7 +252,20 @@ describe('Game integration tests', () => {
 		}
 
 	];
-	const streetmap = new Streetmap(cells, access, 6, 3);
+	const coordinates = [
+		{cellId: 1, coordinate: [0,0]},
+		{cellId: 2, coordinate: [0,1]},
+		{cellId: 3, coordinate: [0,3]},
+		{cellId: 4, coordinate: [0,4]},
+		{cellId: 5, coordinate: [0,5]},
+		{cellId: 6, coordinate: [1,0]},
+		{cellId: 7, coordinate: [1,1]},
+		{cellId: 8, coordinate: [1,2]},
+		{cellId: 9, coordinate: [1,4]},
+		{cellId: 10, coordinate: [2,0]},
+		{cellId: 11, coordinate: [2,3]},
+	];
+	const streetmap = new Streetmap(cells, access, coordinates,  6, 3);
 	const characters = [
 		new Character('Ned'),
 		new Character('Phil')

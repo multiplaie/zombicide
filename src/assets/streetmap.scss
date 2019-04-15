@@ -1,0 +1,106 @@
+#game {
+  margin-bottom: 50px;
+  margin-left: 22%;
+  margin-top: 50px;
+  overflow-x: auto;
+  .streetmap {
+    position: absolute;
+    .cell {
+      padding: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+}
+
+#game .streetmap [data-north-wall = "closed"] {
+  border-top-color: #000 !important;
+  border-top-width: 2px !important;
+}
+
+#game .streetmap [data-south-wall = "closed"] {
+  border-bottom-color: #000 !important;
+  border-bottom-width: 2px !important;
+}
+
+#game .streetmap [data-east-wall = "closed"] {
+  border-right-color: #000 !important;
+  border-right-width: 2px !important;
+}
+
+#game .streetmap [data-west-wall = "closed"] {
+  border-left-color: #000 !important;
+  border-left-width: 2px !important;
+}
+
+#game .streetmap [data-north-wall = "open"] {
+  border-top-style: dashed !important;
+}
+
+#game .streetmap [data-south-wall = "open"] {
+  border-bottom-style: dashed !important;
+}
+
+#game .streetmap [data-east-wall = "open"] {
+  border-right-style: dashed !important;
+}
+
+#game .streetmap [data-west-wall = "open"] {
+  border-left-style: dashed !important;
+}
+
+#game .characters {
+  position: absolute;
+}
+
+#game .characters .character {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #637d7e;
+  color: #f5fef0;
+  padding: 1em;
+  height: 100px;
+  width: 100px;
+  border-color: #b82c13 !important;
+  border-width: 2px !important;
+}
+
+#game .characters [data-position-row = "2"] {
+  top: calc(1 * 500px + 25px);
+}
+
+#game .characters [data-position-row = "3"] {
+  top: calc(2 * 500px + 25px);
+}
+
+#game .characters [data-position-col = "2"] {
+  left: calc(1 * 500px + 25px);
+}
+
+#game .characters [data-position-col = "3"] {
+  left: calc(2 * 500px + 25px);
+}
+
+#game .characters [data-position-col = "4"] {
+  left: calc(3 * 500px + 25px);
+}
+
+#game .characters [data-position-col = "5"] {
+  left: calc(4 * 500px + 25px);
+}
+
+#game .characters [data-position-col = "6"] {
+  left: calc(5 * 500px + 25px);
+}
+
+#game .characters .actions {
+  position: absolute;
+  background-color: #f0f0f0;
+
+}
+
+#game .characters .actions .action {
+  padding: 0 1em;
+}

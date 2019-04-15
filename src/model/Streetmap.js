@@ -8,11 +8,16 @@ const westDirectionValue = 'west';
 
 class Streetmap {
 
-	constructor(cells, access, width, height) {
+	constructor(cells, access, coordinates, width, height) {
 		this._cells = cells;
 		this._access = access;
 		this._width = width;
 		this._height = height;
+		this._coordinates = coordinates;
+	}
+
+	get coordinates(){
+		return this._coordinates;
 	}
 
 	/**

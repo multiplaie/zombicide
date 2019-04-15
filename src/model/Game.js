@@ -67,6 +67,7 @@ class Game {
 				this._streetmap
 					.getDistanceBetweenTwoCells(this._charactersStates.find(character => character.playing).positionCellId, cellIdTarget)
 					.filter(e => e.distance <= this._characters.find(c => c.name === this._charactersStates.find(character => character.playing).characterName).getRemainingAction().length)
+					.find((e,i) => i === 0)
 					.distance
 			);
 		this._charactersStates
